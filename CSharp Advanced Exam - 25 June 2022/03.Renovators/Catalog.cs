@@ -10,6 +10,7 @@ namespace Renovators
     {
         private Dictionary<string, Renovator> renovators = new Dictionary<string, Renovator>();
         private int neededRenovators;
+
         public Catalog(string name, int neededRenovators, string project)
         {
             Name = name;
@@ -18,10 +19,10 @@ namespace Renovators
         }
 
         public string Name { get; private set; }
+        public int NeededRenovators { get => neededRenovators - Renovators.Count; }
         public string Project { get; private set; }
-        public int NeededRenovators { get => neededRenovators - renovators.Count; }
-        public int Count { get => renovators.Count; }
         IReadOnlyCollection<Renovator> Renovators => renovators.Values;
+        public int Count => Renovators.Count;
 
         public string AddRenovator(Renovator renovator)
         {
@@ -37,7 +38,7 @@ namespace Renovators
 
             if (renovator.Rate > 350)
             {
-                return "Invalid renovator's Rate.";
+                return "Invalid renovator's rate.";
             }
 
             renovators.Add(renovator.Name, renovator);
@@ -49,22 +50,15 @@ namespace Renovators
 
         public int RemoveRenovatorBySpecialty(string type)
         {
-            List<string> remove = new List<string>();
+            int count = 0;
 
-            foreach (Renovator renovator in Renovators)
+            foreach (Renovator renovator in Renovators.Where(x => x.Type == type))
             {
-                if (renovator.Type == type)
-                {
-                    remove.Add(renovator.Name);
-                }
+                renovators.Remove(renovator.Name);
+                count++;
             }
 
-            for (int i = 0; i < remove.Count; i++)
-            {
-                renovators.Remove(remove[i]);
-            }
-
-            return remove.Count;
+            return count;
         }
 
         public Renovator HireRenovator(string name)
@@ -78,27 +72,14 @@ namespace Renovators
             return null;
         }
 
-        public List<Renovator> PayRenovators(int days)
-        {
-            List<Renovator> output = new List<Renovator>();
-
-            foreach (Renovator renovator in Renovators)
-            {
-                if (renovator.Days >= days)
-                {
-                    output.Add(renovator);
-                }
-            }
-
-            return output;
-        }
+        public List<Renovator> PayRenovators(int days) => new List<Renovator>(Renovators.Where(x => x.Days >= days));
 
         public string Report()
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine($"Renovators available for Project {Project}:");
 
-            foreach (Renovator renovator in Renovators.Where(x => x.Hired==false))
+            foreach (Renovator renovator in Renovators.Where(x => x.Hired == false))
             {
                 sb.AppendLine($"{renovator}");
             }

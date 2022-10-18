@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Renovators
 {
@@ -82,7 +83,6 @@ namespace Renovators
             --Specialty: Furniture
             --Rate per day: 300 BGN
             */
-
         }
     }
 }

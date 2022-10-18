@@ -25,9 +25,10 @@ namespace Renovators
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"-Renovator: {this.Name}");
-            sb.AppendLine($"--Specialty: {this.Type}");
-            sb.AppendLine($"--Rate per day: {this.Rate} BGN");
+            sb.AppendLine($"-Renovator: {Name}");
+            sb.AppendLine($"--Specialty: {Type}");
+            sb.AppendLine($"--Rate per day: {Rate} BGN");
+
             return sb.ToString().TrimEnd();
         }
     }
