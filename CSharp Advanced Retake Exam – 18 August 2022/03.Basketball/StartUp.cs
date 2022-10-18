@@ -114,7 +114,6 @@ namespace Basketball
             --Rating: 86.9
             --Games played: 10
             */
-
         }
     }
 }

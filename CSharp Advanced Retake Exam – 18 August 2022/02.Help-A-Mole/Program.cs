@@ -138,6 +138,7 @@ namespace _02.Help_A_Mole
                 {
                     Console.Write(field[i, j]);
                 }
+
                 Console.WriteLine();
             }
         }
